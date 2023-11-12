@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Wendi Wang;A01345480">
+    <link rel="icon" href="23.svg" type="image/x-icon">
+    <title>DOWN GROOVE on the "ONE"</title>
+</head>
+<body>
+    <style>
+        body{
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 10vh 0;
+        }
+        .rhythm, .counts, .bar, .number,.position{
+            display: flex;
+            flex-direction: row;
+            width: 80%;
+        }
+       .rhythm, .counts {
+            margin: 5vh 0;
+       }
+       .position {
+        justify-content: space-between;
+        align-items: center;
+       }
+        .bar {
+            border-left: black 2px solid;
+        }
+        .bar:nth-child(4), .number:nth-child(4){
+            border-right:black 2px solid ;
+        }
+        .bar ul, .number ul{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+        .number{
+            align-items: center;
+        }
+        .counts ul li{
+            list-style: none;
+        }
+        h2 {
+            font-size: 2.8em;
+            font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        h3 {
+            font-size: 2em;
+        }
+        .ball {
+            width: 50px;
+            height: 50px;
+            background: black;
+            position: absolute;
+            left: 0;
+            top: 59%;
+            border-radius: 50%;
+        }
+        .owl {
+            width: 500px;
+            height: auto;
+            margin-bottom: -9vh;
+            transition: 1s;
+        }
+        .instructions {
+            margin-bottom: -15vh;
+            position: relative;
+        }
+        .instructions:before {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 100%;
+            background-color: white;
+            left: -5%;
+            transform: rotateZ(30deg);
+            animation: blink .5s 2 ease-in alternate;
+        }
+        @keyframes blink {
+            from{left: -5%}
+            to{left: 100%}
+        }
+        .control {
+            margin-bottom: -10vh;
+        }
+        .play-pause {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 20px blue;
+            animation: appear .8s ease-out forwards;
+            animation-delay: .8s;
+            transform: translateY(1000px);
+            opacity: 0;
+            margin-left: -15px;
+            object-position: center;
+            object-fit: cover;
+        }
+        @keyframes appear {
+            from{transform: translateY(1000px);}
+            to{transform: translateY(0px);
+                opacity: 1;}
+        }
+    </style>
+    <div class="instructions">
+        <h2>Press D on the keyboard to Make the owl go DOWN on BEAT</h2>
+    </div>
+    <div class="owl">
+    <img class='change' src="up.svg" alt="owl learning to groove on beat">
+    </div>
+    <div class="control">
+        <!-- <button onclick="downGroove()">HIT ME</button> -->
+    </div>
+    <div class="container">
+        <div class="position">
+            <h2>Start</h2>
+            <img class='play-pause' src="play.svg" alt="play button">
+            <h2>End</h2>
+        </div>
+        <div class="rhythm">
+         <div class="bar">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+         </div>
+         <div class="bar">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+         </div>
+         <div class="bar">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+         </div>
+         <div class="bar">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+         </div>
+         </div>
+         <div class="ball"></div>
+         <div class="counts">
+            <div class="number">
+                <h2>1</h2>
+                <ul>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </ul>
+            </div>
+             <div class="number">
+                <h3>5</h3>
+                <ul>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                </ul>
+            </div>
+             <div class="number">
+                <h2>1</h2>
+                <ul>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </ul>
+            </div>
+             <div class="number">
+                <h3>5</h3>
+                <ul>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                </ul>
+            </div>
+         </div>
+    </div>
+    <audio class="music" src="beats.mp3"></audio>
+    <script>
+        let standing = true;
+        function downGroove() {
+            if(standing){
+            standing = false;
+            document.querySelector('.change').src = "down.svg";
+            document.querySelector('.change').style.transition = ".25s";
+       
+            } else {
+            document.querySelector('.change').src = "up.svg";
+            standing = true;
+            }
+        }
+        function pressSpacebar(event) {
+    if (event.key === 'D' || event.key === 'd') {
+        downGroove(); 
+        }
+    }
+    document.addEventListener('keydown', pressSpacebar);
+        // Get references to the .ball and .rhythm elements
+        const ball = document.querySelector('.ball');
+        const rhythm = document.querySelector('.rhythm');
+        const audio = document.querySelector('.music');
+        // Initialize variables to keep track of the current bar index and current position
+        let currentBarIndex = 0;
+        // Function to update the ball's position
+        function updateBallPosition() {
+            const bars = rhythm.querySelectorAll('.bar');
+
+            const currentBar = bars[currentBarIndex];
+
+            // Calculate the left edge position of the current bar
+            const barRect = currentBar.getBoundingClientRect();
+            const barLeftEdge = barRect.left;
+
+            ball.style.left = barLeftEdge - ball.clientWidth/2+ 'px';
+
+            currentBarIndex = (currentBarIndex + 1) % bars.length;
+
+            // Log the ball's position for debugging
+            console.log('Ball Position:', ball.style.left);
+        }
+        const play_btn = document.querySelector(".play-pause");
+        let playing = false;
+        const start_rotation = () => {
+            dot_interval= setInterval(updateBallPosition, 500);
+			// Set the 'playing' variable to true, indicating that the ball is moving
+			playing = true;
+        }
+        const toggle_play_pause = () => {
+		if (playing) {	
+			play_btn.src = "play.svg";
+			window.clearInterval(dot_interval);
+			playing = false;
+            audio.pause();
+
+		} else {
+			play_btn.src = "pause.svg";
+            start_rotation();
+            setTimeout(function () {
+            audio.play();
+        }, 500);
+		}
+		}
+        let isPlaying;
+        audio.addEventListener('ended', function () {
+        clearInterval(dot_interval); 
+        isPlaying = false;
+        play_btn.src = 'play.svg'; 
+        ball.style.left = "0";
+        });
+        play_btn.addEventListener("click", toggle_play_pause);
+    </script>
+</body>
+</html>
